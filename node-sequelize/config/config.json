@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "zavrsni_node_1",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

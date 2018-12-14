@@ -1,0 +1,139 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "NodeJS Microsevice 1",
+    "description": "First microservice in NodeJS"
+  },
+  "host": "locahost:3000",
+  "basePath": "/api/",
+  "paths": {
+    "/user": {
+      "get": {
+        "summary": "Get list of users",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "mail": {
+                    "type": "string"
+                  },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Get single user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single user"
+          }
+        }
+      }
+    },
+    "/user/find_users_by_skills": {
+      "post": {
+        "summary": "Get appropriate users by skills",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "skills",
+            "schema": {
+              "type": "object",
+              "required": [
+                "skills"
+              ],
+              "properties": {
+                "skills": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/skill/": {
+      "get": {
+        "summary": "Get list of available skills",
+        "responses": {
+          "200": {
+            "description": "A list of skills",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skill/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "in": "path"
+          }
+        ],
+        "summary": "Get a single skill",
+        "responses": {
+          "200": {
+            "description": "A single skill"
+          }
+        }
+      }
+    }
+  }
+}
