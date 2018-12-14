@@ -1,5 +1,4 @@
 var bcrypt = require('bcryptjs');
-var amqp = require('amqplib/callback_api');
 const User = require('../models').User;
 const Skill = require('../models').Skill;
 
@@ -103,36 +102,21 @@ module.exports = {
                         message: 'User not fount'
                     });
                 }
-                Skill.findOne({where: {title: req.body.title}}).then(skill=>{
-                    if(!skill){
-                        Skill.create({title: req.body.title}).then(skillNew=>{
-                            user.addSkill(skillNew);
-                            amqp.connect('amqp://localhost', function(err, conn) {
-                            conn.createChannel(function(err, ch) {
-                                var ex = 'skills';
-                                var msg = req.body.title;
-
-                                ch.assertExchange(ex, 'fanout', {durable: true});
-                                ch.publish(ex, '', new Buffer(msg));
-                                console.log(" [x] Sent %s", msg);
-                            });
-
-                            });
-
-                        return res.status(200).send(user);
-                        })
+                Skill.findById(req.body.skill_id).then((skill) => {
+                    if(!skill) {
+                        return res.status(404).send({
+                            message: 'Skill not found'
+                        });
                     }
-                    else{
-                        user.addSkill(skill);
-                        return res.status(200).send(user);
-                    }
+                    user.addSkill(skill);
+                    return res.status(200).send(user);
                 })
             })
             .catch((error) => res.status(400).send(error));
     },
 
     findUsersBySkills(req, res) {
-        console.log(req.body.skills);
+        console.log(req);
         return User
             .findAll({
                 include:[

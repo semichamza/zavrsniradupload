@@ -10,8 +10,6 @@ var usersRouter = require('./routes/users');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger.json');
 
-var Skill = require('./models').Skill;
-
 var app = express();
 
 // view engine setup
@@ -50,40 +48,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-
-var amqp = require('amqplib/callback_api');
-
-amqp.connect('amqp://localhost', function(err, conn) {
-  conn.createChannel(function(err, ch) {
-    var ex = 'skills';
-
-    ch.assertExchange(ex, 'fanout', {durable: true});
-  
-
-    ch.assertQueue('', {exclusive: ˘}, function(err, q) {
-      console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-      ch.bindQueue(q.queue, ex, '');
-
-      ch.consume(q.queue, function(msg) {
-        if(msg.content) {
-          const content = msg.content;
-          Skill.findOne({where:{title:content}}).then(skill=>{
-            if(!skill){
-              Skill.create({title:content}).then(()=>{
-                console.log('new skill added!')
-              });
-            }
-            else {
-              console.log('skill already present');
-            }
-          });
-        console.log(" [x] %s", msg.content.toString());
-      }
-      }, {noAck: true});
-    });
-  });
 });
 
 module.exports = app;

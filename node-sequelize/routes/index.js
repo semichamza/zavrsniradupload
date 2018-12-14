@@ -9,12 +9,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 router.get('/api/user', userController.list);
-router.post('/api/user/add_skill', userController.addSkill);
 router.get('/api/user/:id', userController.getById);
 router.post('/api/user', userController.add);
 router.put('/api/user/:id', userController.update);
 router.delete('/api/user/:id', userController.delete);
-
+router.post('/api/user/add_skill', userController.addSkill);
 router.post('/api/user/find_users_by_skills', userController.findUsersBySkills);
 
 router.get('/api/skill', skillController.list);

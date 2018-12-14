@@ -8,12 +8,13 @@ const Project = (props) => (
             <span className="card-title">Creator: {props.project.creator}</span>
             <div>Description: {props.project.description}</div>
             <div>Skills needed: {props.project.skills.toString()}</div>
+            <br></br>
             <div><button className="btn" onClick={()=>{
-                axios.get("http://localhost:3001/api/projects/"+props.project.id+'/findWorkers').then((response)=>{
+                axios.get("http://localhost:8080/projects/"+props.project.id+'/getappropriateusers').then((response)=>{
                     console.log(response.data);
                     props.setFreelancersForProject(response.data,props.index);
                 })}
-            }>Show appropriate freelancers</button></div>
+            }>Show appropriate freelancers Direct Communication</button></div>
             {
                 !!props.freelancers && props.freelancers.map((freelancer)=>(
                     <Freelancer user={freelancer}/>

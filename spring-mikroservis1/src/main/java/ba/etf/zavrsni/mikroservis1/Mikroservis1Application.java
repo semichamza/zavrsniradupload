@@ -1,33 +1,20 @@
 package ba.etf.zavrsni.mikroservis1;
 
-import ba.etf.zavrsni.mikroservis1.controllers.SkillsReciever;
 import ba.etf.zavrsni.mikroservis1.domain.Project;
 import ba.etf.zavrsni.mikroservis1.domain.RegisteredUser;
 import ba.etf.zavrsni.mikroservis1.domain.Skill;
 import ba.etf.zavrsni.mikroservis1.repositories.ProjectRepository;
 import ba.etf.zavrsni.mikroservis1.repositories.SkillRepository;
 import ba.etf.zavrsni.mikroservis1.repositories.UserRepository;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@EnableRabbit
 public class Mikroservis1Application {
-
-
 
     public static void main(String[] args) {
         SpringApplication.run(Mikroservis1Application.class, args);

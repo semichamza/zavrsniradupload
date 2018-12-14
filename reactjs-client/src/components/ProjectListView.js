@@ -18,7 +18,7 @@ export default class ProjectListView extends React.Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:3001/api/projects').then((response)=>{
+        axios.get('http://localhost:8080/projects').then((response)=>{ 
             const projects = response.data;
             const freelancers = new Array(projects.length);
             this.setState({projects,freelancers});
